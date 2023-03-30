@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue Example</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <my-component v-if="check"></my-component>
+      <p v-if="!check">{Null}</p>
+      <div style="margin-top: 20px">
+        <button v-if="check" @click="unmountComponent">Hide</button>
+        <button v-if="!check" @click="unmountComponent">Show</button>
+      </div>
+    </div>
+
+    <script>
+      const MyComponent = {
+        template: "<div>Child Component</div>",
+        mounted() {
+          console.log("This component is mounted");
+        },
+        beforeUnmount() {
+          console.log("Before Unmount");
+          //Dùng để thực hiện các tác vụ như hủy các kết nối, xóa các listeners, hoặc lưu trữ trạng thái của component.
+        },
+        unmounted() {
+          console.log(" Unmounted");
+          //Dùng để thực hiện các tác vụ như giải phóng bộ nhớ, hoặc gửi log để theo dõi hoạt động của component.
+        },
+      };
+
+      Vue.createApp({
+        el: "#app",
+        components: {
+          "my-component": MyComponent,
+        },
+        data() {
+          return {
+            check: true,
+          };
+        },
+        methods: {
+          unmountComponent() {
+            this.check = !this.check;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
