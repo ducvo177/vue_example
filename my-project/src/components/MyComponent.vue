@@ -8,7 +8,7 @@
 export default {
   data() {
     return {
-      message: "Hello from MyComponent!",
+      message: "Child Component",
     };
   },
   mounted() {
