@@ -9,12 +9,12 @@
   </head>
   <body>
     <div id="app">
-      <button v-on:click="showModal = true">Show Modal</button>
+      <button @click="showModal = true">Show Modal</button>
 
       <teleport to="body">
         <div v-if="showModal" class="modal" style="border: 0.5px dotted black">
           <button
-            v-on:click="showModal = false"
+            @click="showModal = false"
             style="background-color: red; color: white"
           >
             Close
