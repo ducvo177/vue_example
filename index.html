@@ -10,7 +10,7 @@
 
   <body>
     <div id="app">
-      <my-component v-if="check" @error-captured="handleError"></my-component>
+      <my-component v-if="check"></my-component>
       <p v-if="!check">{Null}</p>
       <div style="margin-top: 20px">
         <button v-if="check" @click="unmountComponent">Hide</button>
@@ -38,8 +38,9 @@
             throw new Error("Oops, something went wrong!");
           },
         },
-        onErrorCaptured(error, vm, info) {
-          this.$emit("error-captured", error, vm, info);
+        onErrorCaptured(error) {
+          console.error("Error in ChildComponent:", error);
+          return false;
         },
       };
 
@@ -56,11 +57,6 @@
         methods: {
           unmountComponent() {
             this.check = !this.check;
-          },
-          handleError(error, vm, info) {
-            console.error("Error captured:", error);
-            console.error("Vue instance:", vm);
-            console.error("Component information:", info);
           },
         },
       }).mount("#app");
