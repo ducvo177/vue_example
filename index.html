@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
 
   <body>
     <div id="app">
-      <my-component v-if="check"></my-component>
+      <my-component v-if="check" @error-captured="handleError"></my-component>
       <p v-if="!check">{Null}</p>
       <div style="margin-top: 20px">
         <button v-if="check" @click="unmountComponent">Hide</button>
@@ -20,7 +20,8 @@
 
     <script>
       const MyComponent = {
-        template: "<div>Child Component</div>",
+        template:
+          "<div>Child Component</div> <button  @click='handleThrowError'>Throw Error</button>",
         mounted() {
           console.log("This component is mounted");
         },
@@ -31,6 +32,11 @@
         unmounted() {
           console.log(" Unmounted");
           //Dùng để thực hiện các tác vụ như giải phóng bộ nhớ, hoặc gửi log để theo dõi hoạt động của component.
+        },
+        methods: {
+          handleThrowError() {
+            throw new Error("Oops, something went wrong!");
+          },
         },
       };
 
@@ -47,6 +53,11 @@
         methods: {
           unmountComponent() {
             this.check = !this.check;
+          },
+          handleError(error, vm, info) {
+            console.error("Error captured:", error);
+            console.error("Vue instance:", vm);
+            console.error("Component information:", info);
           },
         },
       }).mount("#app");
