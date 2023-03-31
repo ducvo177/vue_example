@@ -38,6 +38,9 @@
             throw new Error("Oops, something went wrong!");
           },
         },
+        onErrorCaptured(error, vm, info) {
+          this.$emit("error-captured", error, vm, info);
+        },
       };
 
       Vue.createApp({
