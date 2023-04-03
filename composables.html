@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Composables Example</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <button @click="showModal">Show Modal</button>
+      <div v-if="isShowing" class="modal">
+        <div class="modal-content">
+          <h2>Modal Title</h2>
+          <p>Modal content goes here</p>
+          <button @click="hideModal">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script>   
+      const { ref } = Vue;
+
+      function useModal() {
+        const isShowing = ref(false);
+        function show() {
+          isShowing.value = true;
+        }
+        function hide() {
+          isShowing.value = false;
+        }
+        return {
+          isShowing,
+          show,
+          hide
+        };
+      }
+
+      const app = Vue.createApp({
+        setup() {
+          const { isShowing, show, hide } = useModal();
+          function showModal() {
+            show();
+          }
+          function hideModal() {
+            hide();
+          }
+          return {
+            isShowing,
+            showModal,
+            hideModal
+          };
+        }
+      }); app.mount('#app');
+    </script>
+  </body>
+</html>

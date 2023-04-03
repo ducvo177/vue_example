@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Example</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<style>
+    .modal {
+        position: fixed;
+        z-index: 999;
+        top: 20%;
+        left: 50%;
+        width: 300px;
+        margin-left: -150px;
+        border: 1px solid black;
+        text-align: center;
+        padding: 2rem;
+        background: aliceblue;
+        border-radius: 1rem;
+    }
+
+    .modal button {
+        padding: 0.5rem;
+        border-radius: 1.5rem;
+        font-weight: bold;
+    }
+</style>
+<body>
+    <div id="app">
+        <button @click="open = true">Open Modal</button>
+    
+        <Teleport to="body">
+            <div v-if="open" class="modal">
+                <h3>Hello from the modal!</h3>
+                <button @click="open = false">Close</button>
+            </div>
+       </Teleport>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            el: "#app",
+            data() {
+            return {
+                open: false,
+            };
+            },
+        }).mount("#app");
+        </script>
+</body>
+</html>
