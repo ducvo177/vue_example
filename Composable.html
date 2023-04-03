@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue Example</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+<body>
+  <div id="app">
+    <p>Count: {{ count }}</p>
+    <button v-on:click="increment">Increment</button>
+    <button v-on:click="decrement">Decrement</button>
+  </div>
+  
+  <script>
+    const { ref } = Vue;
+
+    function useCounter() {
+      const count = ref(0)
+
+      function increment() {
+        count.value++
+      }
+
+      function decrement() {
+        count.value--
+      }
+
+      return {
+        count,
+        increment,
+        decrement
+      }
+    }
+
+    Vue.createApp({
+      setup() {
+        const { count, increment, decrement } = useCounter()
+
+        return {
+          count,
+          increment,
+          decrement
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
