@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue Example</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="showModal = true">Show Modal</button>
+
+      <teleport to="body">
+        <div v-if="showModal" class="modal" style="border: 0.5px dotted black">
+          <button
+            @click="showModal = false"
+            style="background-color: red; color: white"
+          >
+            Close
+          </button>
+          <p>Click the button above to close Modal</p>
+        </div>
+      </teleport>
+    </div>
+    <script>
+      const { ref } = Vue;
+
+      Vue.createApp({
+        setup() {
+          const showModal = ref(false);
+
+          return {
+            showModal,
+          };
+        },
+      }).mount("#app");
+    </script>
+
+    <style>
+      .modal {
+        position: fixed;
+        z-index: 999;
+        top: 30%;
+        left: 50%;
+        width: 300px;
+        margin-left: -150px;
+      }
+    </style>
+  </body>
+  <footer></footer>
+</html>
